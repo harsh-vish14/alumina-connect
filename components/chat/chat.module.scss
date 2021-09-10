@@ -1,0 +1,81 @@
+.chat {
+  background-image: url("../../public//images/double-bubble-outline.png");
+  max-height: 100vh;
+  min-height: 100%;
+  width: -webkit-fill-available;
+  box-shadow: inset 7px 0px 10px -10px rgb(0 0 0 / 75%);
+  padding: 3px 10px;
+  position: relative;
+  .ChatInput {
+    position: absolute;
+    div {
+      display: flex;
+    }
+    bottom: 0px;
+    width: 98%;
+    /* height: 70px; */
+    padding: 10px;
+    /* margin: auto; */
+    // background: #d1d1d1;
+    input {
+      width: 100%;
+      transition: 0.4s;
+      &:focus {
+        transition: 0.4s;
+        box-shadow: 3px -3px 9px 1px #00000047;
+      }
+    }
+  }
+  .ChatInputIcon {
+    cursor: pointer;
+    background: green;
+    font-size: 30px;
+    color: white;
+    height: 50px;
+    width: 50px;
+    margin: 0px 00px 0px 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    &:hover {
+      transition: 0.4s;
+      box-shadow: 3px -3px 9px 1px #00000047;
+    }
+  }
+}
+.notSelected {
+  max-height: 100vh;
+  min-height: 100%;
+  width: -webkit-fill-available;
+  box-shadow: inset 7px 0px 10px -10px rgb(0 0 0 / 75%);
+  padding: 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 900;
+  font-size: 1.5625rem;
+}
+.messages {
+  padding-bottom: 101px;
+  height: 90vh;
+  overflow: auto;
+  overflow-x: hidden;
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
+.testing {
+  right: 0;
+  position: absolute;
+  top: 0px;
+  background: rgb(107, 7, 7);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}

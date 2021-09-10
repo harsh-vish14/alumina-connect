@@ -1,0 +1,36 @@
+.currentUser {
+  padding: 10px;
+  background: rgb(105 193 108);
+  color: black;
+  width: fit-content;
+  min-width: 250px;
+  border-radius: 10px 10px 2px 10px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-top: 10px;
+  .date {
+    font-size: 13px;
+    opacity: 0.5;
+    margin-left: auto;
+    width: fit-content;
+    margin-top: 10px;
+  }
+}
+.otherUser {
+  padding: 10px;
+  background: rgb(44 90 28);
+  color: white;
+  width: fit-content;
+  min-width: 250px;
+  border-radius: 10px 10px 10px 2px;
+  max-width: 300px;
+  margin-top: 10px;
+  .date {
+    font-size: 13px;
+    opacity: 0.5;
+    margin-right: auto;
+    margin-top: 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}

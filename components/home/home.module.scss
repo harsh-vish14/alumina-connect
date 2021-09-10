@@ -1,0 +1,16 @@
+.home {
+  display: flex;
+  max-height: 100vh;
+  min-height: 90vh;
+  .sideBar {
+    min-width: 420px;
+    margin: auto;
+    height: 90vh;
+    overflow: auto;
+    overflow-x: hidden;
+    /* width */
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+  }
+}
