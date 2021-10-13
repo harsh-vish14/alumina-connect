@@ -6,7 +6,7 @@ const notFound = () => {
   return (
     <>
       <Head>
-        <title>Alumina Connect / 404 NOT-FOUND</title>
+        <title>Alumina Connect /404 NOT-FOUND</title>
       </Head>
       <Result
         status="404"
