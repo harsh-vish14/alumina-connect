@@ -1,8 +1,16 @@
 import Alumina from "../../model/alumina";
+import Head from "next/head";
 import AluminaComponent from "../../components/alumina/alumina";
 const aluminaWithId = ({ data }) => {
-  console.log(data);
-  return <AluminaComponent aluminaData={data} />;
+  return (
+    <>
+      <Head>
+        <title>Alumina Connect / {data.name}</title>
+        <meta name="description" content={data.aluminaDetail}></meta>
+      </Head>
+      <AluminaComponent aluminaData={data} />
+    </>
+  );
 };
 
 export const getStaticProps = async (context) => {

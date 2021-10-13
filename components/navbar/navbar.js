@@ -178,6 +178,28 @@ const Navbar = () => {
                       key="admin"
                       style={{ marginBottom: "5px", marginTop: "3px" }}
                     >
+                      <Link href="/admin">
+                        <div
+                          className={classes.loginBtn}
+                          style={{
+                            fontSize: "15px",
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          <a>
+                            <RiAdminFill style={{ marginRight: "10px" }} />{" "}
+                            Admin{" "}
+                          </a>
+                        </div>
+                      </Link>
+                    </Menu.Item>
+                  )}
+                  <Menu.Item
+                    key="about"
+                    style={{ marginBottom: "5px", marginTop: "3px" }}
+                  >
+                    <Link href="/about">
                       <div
                         className={classes.loginBtn}
                         style={{
@@ -186,15 +208,10 @@ const Navbar = () => {
                           alignItems: "center",
                         }}
                       >
-                        <Link href="/admin">
-                          <a>
-                            <RiAdminFill style={{ marginRight: "10px" }} />{" "}
-                            Admin{" "}
-                          </a>
-                        </Link>
+                        <a>About Us</a>
                       </div>
-                    </Menu.Item>
-                  )}
+                    </Link>
+                  </Menu.Item>
                   <Menu.Item
                     key="update"
                     style={{ marginBottom: "5px", marginTop: "3px" }}
