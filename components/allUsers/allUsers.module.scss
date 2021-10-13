@@ -1,0 +1,36 @@
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      path {
+        stroke: white;
+      }
+    }
+  }
+  input {
+    padding: 10px;
+  }
+}
+.deleteButton {
+  margin-bottom: 20px;
+}
+.btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addUserModal {
+  .input {
+    margin: 20px 0px;
+    input {
+      padding: 10px;
+    }
+  }
+}

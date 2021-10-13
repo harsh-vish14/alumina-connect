@@ -2,7 +2,8 @@ import { useRef, useEffect } from "react";
 import Message from "./messages/messages";
 import classes from "./chats.module.scss";
 const currentUserDummyId = "thisisdummyidjustfortestinfrontend";
-const Chats = ({ chatsMessage = [] }) => {
+
+const Chats = ({ chatsMessage = [], session }) => {
   useEffect(() => {
     scrollToBottom();
   }, [chatsMessage]);
@@ -19,13 +20,17 @@ const Chats = ({ chatsMessage = [] }) => {
     <div>
       {chatsMessage &&
         chatsMessage.map((chat, i) => {
-          console.log(chat);
+          {
+            /* console.log(chat); */
+          }
           return (
             <Message
               message={chat.message}
               dateAndTime={chat.dateAndTime}
+              image={chat.image}
+              name={chat.name}
               key={i}
-              currentUser={currentUserDummyId === chat.id}
+              currentUser={session.user.userID === chat.userId}
             />
           );
         })}

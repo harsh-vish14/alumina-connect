@@ -1,70 +1,38 @@
+import { getAllAlumina } from "../../lib/gettingandsetting";
+import notificationFun from "../../lib/notification";
 import Bar from "./bar/bar";
-const dummyData = [
-  {
-    name: "harsh vishwakarma",
-    year: "2019-23",
-    image: "http://image",
-    id: "kdnajsdnajsd",
-  },
-  {
-    name: "harsh vishwakarma",
-    year: "2019-23",
-    image: "http://image",
-    id: "kdnajsdnajsd",
-  },
-  {
-    name: "harsh vishwakarma",
-    year: "2019-23",
-    image: "http://image",
-    id: "kdnajsdnajsd",
-  },
-  {
-    name: "harsh vishwakarma",
-    year: "2019-23",
-    image: "http://image",
-    id: "kdnajsdnajsd",
-  },
-  {
-    id: "aksndkaksndaknds",
-    name: "surajit Mondal",
-    year: "2019-23",
-    image: "http://image",
-  },
-  {
-    id: "askdmaksdmaskd",
-    name: "kiran maharana",
-    year: "2019-23",
-    image: "http://image",
-  },
-  {
-    id: "askdaksdmakmds",
-    name: "harshkumar Vishwakarma",
-    year: "2019-23",
-    image: "http://image",
-  },
-  {
-    id: "askdnasknddaksmd",
-    name: "harsh",
-    year: "2019-23",
-    image: "http://image",
-  },
-];
+import { useState, useEffect } from "react";
 import classes from "./list.module.scss";
 const List = ({ selectedChat }) => {
+  const [alumina, setAlumina] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const result = await getAllAlumina({ name: "", email: "", year: "" });
+      if (result.status === "success") {
+        console.log("result.data: ", result.data.data);
+        setLoading(false);
+        setAlumina(result.data.data);
+      } else {
+        notificationFun("error", "Error Occurred", result.data.err);
+      }
+      setLoading(false);
+    })();
+  }, []);
   return (
     <div className={classes.list}>
       Alumina List
-      {dummyData.map((user, i) => {
+      {alumina.map((user, i) => {
         return (
           <Bar
             onClick={() => {
-              console.log(user);
-              selectedChat(user.id);
+              selectedChat(user._id);
             }}
-            key={i}
+            key={user._id}
             name={user.name}
-            year={user.year}
-            image={`https://avatars.dicebear.com/api/personas/${user.name}.svg`}
+            year={user.passingYear}
+            image={user.image}
           />
         );
       })}
