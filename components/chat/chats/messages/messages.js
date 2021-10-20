@@ -6,44 +6,40 @@ const Message = ({ message, currentUser, dateAndTime, image, name }) => {
   if (currentUser) {
     return (
       <div className={classes.currentUser}>
-        <div>{name}</div>
+        <div style={{ marginBottom: 10 }}>{name}</div>
         <div>
-          <Avatar
-            size={40}
-            src={image}
-            style={{
-              marginRight: "20px",
-              height: "40px",
-              width: "40px",
-              marginBottom: 10,
-            }}
-          />
           <div>
-            {message}
-            <div className={classes.date}>{date.toLocaleString()}</div>
+            <Avatar
+              size={40}
+              src={image}
+              style={{
+                marginRight: 10,
+                float: "left",
+              }}
+            />
+            <p>{message}</p>
           </div>
+          <div className={classes.date}>{date.toLocaleString()}</div>
         </div>
       </div>
     );
   }
   return (
     <div className={classes.otherUser}>
-      <div>{name}</div>
+      <div style={{ marginBottom: 10 }}>{name}</div>
       <div>
-        <Avatar
-          size={40}
-          src={image}
-          style={{
-            marginRight: "20px",
-            height: "40px",
-            width: "40px",
-            marginBottom: 10,
-          }}
-        />
         <div>
-          {message}
-          <div className={classes.date}>{date.toLocaleString()}</div>
+          <Avatar
+            size={40}
+            src={image}
+            style={{
+              marginRight: 10,
+              float: "left",
+            }}
+          />
+          <p>{message}</p>
         </div>
+        <div className={classes.date}>{date.toLocaleString()}</div>
       </div>
     </div>
   );

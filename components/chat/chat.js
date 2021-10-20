@@ -5,6 +5,7 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import select from "../../animation/chatSelect.json";
 import login from "../../animation/login.json";
 import LottieAnimation from "../lottie/lottieAnimation";
+import chatLoading from "../../animation/chatloading.json";
 import classes from "./chat.module.scss";
 import Chats from "./chats/chats";
 import { useSession } from "next-auth/client";
@@ -17,6 +18,7 @@ const Chat = ({ id }) => {
   const [chatMessages, setChatMessages] = useState([]);
   const [session, loading] = useSession();
   const [aluminaDetails, setAluminaDetails] = useState({});
+  const [loadingChats, setLoadingChats] = useState(false);
   useEffect(() => {
     if (id) {
       alumina();
@@ -37,12 +39,14 @@ const Chat = ({ id }) => {
   }, [id]);
 
   const alumina = async () => {
+    setLoadingChats(true);
     const res = await getAluminaById(id);
     if (res.status === "success") {
       console.log("id: ", id, res.data.data.chatsMessage);
       setChatMessages(res.data.data.chatsMessage);
       setAluminaDetails(res.data.data);
     }
+    setLoadingChats(false);
   };
 
   const submitMessage = () => {
@@ -75,6 +79,15 @@ const Chat = ({ id }) => {
     setInput("");
   };
 
+  if (loadingChats) {
+    return (
+      <div className={classes.notSelected}>
+        <LottieAnimation lottie={chatLoading} height={300} />
+        <div>Loading Please Wait...</div>
+      </div>
+    );
+  }
+
   if (!id) {
     return (
       <div className={classes.notSelected}>
@@ -83,6 +96,7 @@ const Chat = ({ id }) => {
       </div>
     );
   }
+
   return (
     <div className={classes.chat}>
       <div
@@ -106,6 +120,7 @@ const Chat = ({ id }) => {
             </a>
           </Link>
         )}
+        <div>{`${aluminaDetails?.currentPosition} - ${aluminaDetails?.companyName}`}</div>
         <div>{aluminaDetails?.name}</div>
       </div>
       {session && !loading ? (

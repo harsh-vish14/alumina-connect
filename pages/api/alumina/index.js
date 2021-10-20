@@ -7,15 +7,11 @@ const handler = async (req, res) => {
   const { method } = req;
   switch (method) {
     case "GET": {
-      const { name, email, year } = req.query;
+      const { name, company, year } = req.query;
       try {
         const search = {};
         if (name) {
           search.name = { $regex: name, $options: "i" };
-        }
-        if (email) {
-          search.aluminaContacts = {};
-          search.aluminaContacts.emailId = { $regex: email, $options: "i" };
         }
 
         if (year && year != "null") {
@@ -23,12 +19,16 @@ const handler = async (req, res) => {
             $eq: year,
           };
         }
+
+        if (company && company != "null" && company != "undefined") {
+          search.companyName = { $eq: company };
+        }
         console.log("search: ", search);
         const alumina = await Alumina.find(search, { chatsMessage: 0 });
         res.status(200).json({ data: alumina });
       } catch (err) {
         console.log("26:", err);
-        res.status(500).json({ err: "Server Error Occurred" });
+        res.status(500).json({ err: err.message });
       }
       break;
     }
@@ -43,6 +43,8 @@ const handler = async (req, res) => {
         projectsLinks,
         aluminaDetail,
         aluminaInterest,
+        companyName,
+        currentPosition,
       } = req.body;
       const validation = validationCheck({
         image,
@@ -52,6 +54,8 @@ const handler = async (req, res) => {
         passingYearResult,
         aluminaContacts,
         aluminaDetail,
+        companyName,
+        currentPosition,
       });
       if (!validation.status) {
         res
@@ -75,12 +79,14 @@ const handler = async (req, res) => {
           projectsLinks,
           aluminaInterest,
           aluminaDetail,
+          companyName,
+          currentPosition,
         });
         const alumina = await Alumina.find({}, { chatsMessage: 0 });
         res.status(200).json({ data: alumina });
       } catch (err) {
         console.log(err);
-        res.status(500).json({ err: "Server Error Occurred" });
+        res.status(500).json({ err: err.message });
       }
 
       break;
@@ -101,7 +107,7 @@ const handler = async (req, res) => {
         res.status(200).json({ data: alumina });
       } catch (err) {
         console.log(err);
-        res.status(500).json({ err: "Server error Occurred" });
+        res.status(500).json({ err: err.message });
       }
       break;
     default:

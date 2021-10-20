@@ -4,6 +4,15 @@ const AluminaSchema = new mongoose.Schema(
   {
     image: { type: String, required: [true, "Please provide a image"] },
     name: { type: String, required: [true, "Please provide a alumina name"] },
+    currentPosition: {
+      type: String,
+      required: [true, "Please provide a current position"],
+      default: "",
+    },
+    companyName: {
+      type: String,
+      required: [true, "Please provide company companyName"],
+    },
     passingYear: {
       type: String,
       required: [true, "Please provide Passing Year of alumina"],

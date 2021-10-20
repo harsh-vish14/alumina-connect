@@ -37,6 +37,9 @@ const Alumina = ({ aluminaData }) => {
           )}
         </div>
       </div>
+      <div
+        className={classes.onlineContacts}
+      >{`${aluminaData.companyName} - ${aluminaData.currentPosition}`}</div>
       <div className={classes.details}>
         <label>Phone Number: </label>
         <div className={classes.content}>

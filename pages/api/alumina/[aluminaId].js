@@ -25,6 +25,8 @@ const handler = async (req, res) => {
           aluminaContacts,
           projectsLinks,
           aluminaDetail,
+          companyName,
+          currentPosition,
           aluminaInterest,
         } = req.body;
         const validation = validationCheck({
@@ -35,6 +37,8 @@ const handler = async (req, res) => {
           passingYearResult,
           aluminaContacts,
           aluminaDetail,
+          companyName,
+          currentPosition,
         });
         if (!validation.status) {
           res
@@ -60,6 +64,8 @@ const handler = async (req, res) => {
               projectsLinks,
               aluminaInterest,
               aluminaDetail,
+              companyName,
+              currentPosition,
             }
           );
           const alumina = await Alumina.find({}, { chatsMessage: 0 });

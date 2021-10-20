@@ -17,5 +17,6 @@ module.exports = {
     DB_STROAGE_BUCKET: process.env.DB_STROAGE_BUCKET,
     DB_MESSAGINGSENDER_ID: process.env.DB_MESSAGINGSENDER_ID,
     DB_APPID: process.env.DB_APPID,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
 };

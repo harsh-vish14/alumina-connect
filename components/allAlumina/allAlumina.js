@@ -57,6 +57,10 @@ const AllAlumina = () => {
       dataIndex: "email",
     },
     {
+      title: "Company",
+      dataIndex: "company",
+    },
+    {
       title: "Passing Year",
       dataIndex: "passingYear",
     },
@@ -75,9 +79,10 @@ const AllAlumina = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [addUserModal, setAddUserModal] = useState(false);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [year, setYear] = useState(null);
   const [edit, setEdit] = useState(null);
+  const [companies, setCompanies] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
   // app alumina
   const [nameInput, setNameInput] = useState(null);
@@ -93,6 +98,8 @@ const AllAlumina = () => {
   const [projectsLinks, setProjectLinks] = useState(null);
   const [aluminaInterest, setAluminaInterest] = useState(null);
   const [form] = Form.useForm();
+  const [currentPositionInput, setCurrentPositionInput] = useState(null);
+  const [currentCompanyInput, setCurrentCompanyInput] = useState(null);
 
   const [image, setImage] = useState(null);
   // useEffect(() => {
@@ -109,16 +116,21 @@ const AllAlumina = () => {
     setLoading(true);
     let filter;
     if (reset === true) {
-      filter = { name: "", email: "", year: "" };
+      filter = { name: "", company: "", year: "" };
     } else {
-      filter = { name, email, year };
+      filter = { name, company: selectedCompany, year };
     }
-
+    console.log("filter: ", filter);
     const result = await getAllAlumina(filter);
     if (result.status === "success") {
       console.log("result.data: ", result.data.data);
       setLoading(false);
       setUsers(result.data.data);
+      result.data.data.map((details) => {
+        setCompanies((preve) => {
+          return [...new Set([...preve, details.companyName])];
+        });
+      });
     } else {
       notificationFun("error", "Error Occurred", result.data.err);
     }
@@ -131,9 +143,9 @@ const AllAlumina = () => {
 
   const reset = () => {
     setName("");
-    setEmail("");
     setYear(null);
     allAlumina(true);
+    setSelectedCompany(null);
   };
 
   const deleteUsersFun = async () => {
@@ -163,6 +175,8 @@ const AllAlumina = () => {
       name: nameInput,
       image: url,
       passingYear: passingYearInput,
+      currentPosition: currentPositionInput,
+      companyName: currentCompanyInput,
       workExperience: workExperience,
       passingYearResult: passingYearResultInput,
       aluminaContacts: {
@@ -358,6 +372,8 @@ const AllAlumina = () => {
       image: url,
       passingYear: passingYearInput,
       workExperience: workExperience,
+      currentPosition: currentPositionInput,
+      companyName: currentCompanyInput,
       passingYearResult: passingYearResultInput,
       aluminaContacts: {
         number: phonenumberInput,
@@ -429,7 +445,9 @@ const AllAlumina = () => {
       passingYearResultInput: alumina.passingYearResult,
       linkedIn: alumina.aluminaContacts.linkedIn,
       github: alumina.aluminaContacts.github,
+      currentPosition: alumina.currentPosition || "",
       websiteURL: alumina.aluminaContacts.website,
+      currentCompany: alumina.companyName,
       "Project Links": alumina.projectsLinks || [],
       Interest: alumina.aluminaInterest || [],
     });
@@ -447,10 +465,12 @@ const AllAlumina = () => {
     setWorkExperience(alumina.workExperience);
     setPassingYearResultInput(alumina.passingYearResult);
     setPhonenumberInput(alumina.aluminaContacts.number);
+    setCurrentPositionInput(alumina.currentPosition);
     setLinkedIn(alumina.aluminaContacts.linkedIn);
     setGithub(alumina.aluminaContacts.github);
     setWebsite(alumina.aluminaContacts.website);
     setAluminaDetails(alumina.aluminaDetail);
+    setCurrentCompanyInput(alumina.companyName);
     setProjectLinks(alumina?.projectsLinks);
     setAluminaInterest(alumina.aluminaInterest);
     setAddUserModal(true);
@@ -465,6 +485,8 @@ const AllAlumina = () => {
     setPassingYearInput(null);
     setWorkExperience(null);
     setPassingYearResultInput(null);
+    setCurrentPositionInput(null);
+    setCurrentCompanyInput(null);
     setPhonenumberInput(null);
     setAddUserModal(false);
     setLinkedIn(null);
@@ -496,13 +518,35 @@ const AllAlumina = () => {
             setName(e.target.value);
           }}
         />
-        <Input
-          placeholder="Search Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
+        <div>
+          <Select
+            showSearch
+            style={{ width: 200 }}
+            size="large"
+            placeholder="Select company"
+            optionFilterProp="children"
+            allowClear={true}
+            loading={companies.length === 0}
+            value={selectedCompany}
+            onChange={(val) => {
+              setSelectedCompany(val || "");
+              console.log(companies);
+              console.log("change: ", val);
+            }}
+            filterOption={(input, option) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+          >
+            {companies &&
+              companies.map((company) => {
+                return (
+                  <Option key={company} value={company}>
+                    {company}
+                  </Option>
+                );
+              })}
+          </Select>
+        </div>
         <DatePicker
           placeholder="Passing Year"
           value={year ? moment(year, dateFormat) : null}
@@ -576,6 +620,7 @@ const AllAlumina = () => {
         dataSource={users.map((user) => {
           return {
             key: user._id,
+            company: user.companyName,
             name: (
               <Link
                 href={`/alumina/${findLinkedInId(
@@ -667,12 +712,61 @@ const AllAlumina = () => {
           <Form.Item
             name="phone"
             value={phonenumberInput}
+            rules={[
+              { required: true, message: "Please provide phone number!" },
+            ]}
             onChange={(e) => {
               setPhonenumberInput(e.target.value);
             }}
             label="Phone Number"
           >
             <Input type="number" style={{ width: "100%" }} />
+          </Form.Item>
+          <Form.Item
+            name="currentPosition"
+            value={currentPositionInput}
+            rules={[
+              {
+                required: true,
+                message: "Please provide Current Position!",
+              },
+            ]}
+            onChange={(e) => {
+              setCurrentPositionInput(e.target.value);
+            }}
+            label="Current Position"
+          >
+            <Input
+              placeholder="Sr. Full stack developer"
+              value={currentPositionInput}
+              style={{ width: "100%" }}
+              onChange={(e) => {
+                setCurrentPositionInput(e.target.value);
+              }}
+            />
+          </Form.Item>
+          <Form.Item
+            name="currentCompany"
+            value={currentCompanyInput}
+            rules={[
+              {
+                required: true,
+                message: "Please provide currentCompany!",
+              },
+            ]}
+            onChange={(e) => {
+              setCurrentCompanyInput(e.target.value);
+            }}
+            label="Current Company"
+          >
+            <Input
+              placeholder="Amazon"
+              value={currentCompanyInput}
+              style={{ width: "100%" }}
+              onChange={(e) => {
+                setCurrentCompanyInput(e.target.value);
+              }}
+            />
           </Form.Item>
           <Form.Item
             label="About"

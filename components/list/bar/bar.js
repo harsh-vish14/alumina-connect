@@ -2,7 +2,7 @@ import { AiFillLinkedin } from "react-icons/ai";
 import { FiChevronRight } from "react-icons/fi";
 import Image from "next/image";
 import classes from "./bar.module.scss";
-const Bar = ({ name, year, image, linkedIn, onClick }) => {
+const Bar = ({ name, company, position, image, linkedIn, onClick }) => {
   return (
     <div className={classes.bar} onClick={onClick}>
       <div className={classes.image}>
@@ -16,7 +16,7 @@ const Bar = ({ name, year, image, linkedIn, onClick }) => {
       </div>
       <div className={classes.details}>
         <div className={classes.name}>{name}</div>
-        <div className={classes.year}>{year}</div>
+        <div className={classes.year}>{`${position} at ${company}`}</div>
       </div>
       <div className={classes.arrow}>
         <FiChevronRight />

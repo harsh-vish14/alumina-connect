@@ -31,7 +31,8 @@ const List = ({ selectedChat }) => {
             }}
             key={user._id}
             name={user.name}
-            year={user.passingYear}
+            company={user.companyName}
+            position={user.currentPosition}
             image={user.image}
           />
         );
