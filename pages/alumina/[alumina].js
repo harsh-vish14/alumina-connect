@@ -32,7 +32,7 @@ export const getStaticProps = async (context) => {
   console.log("Found Yaaa!: ", aluminaDetails);
   return {
     props: { data: JSON.parse(JSON.stringify(aluminaDetails)) },
-    revalidate: 10900,
+    revalidate: 1,
   };
 };
 export const getStaticPaths = async (context) => {

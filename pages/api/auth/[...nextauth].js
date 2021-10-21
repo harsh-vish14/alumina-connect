@@ -22,6 +22,7 @@ export default NextAuth({
         await User.findOne({ email: credentials.email }).then((user) => {
           if (!user) {
             throw new Error("User not found");
+            return;
           }
           userDetails = user;
         });
@@ -32,6 +33,7 @@ export default NextAuth({
 
         if (!isCorrect) {
           throw new Error("Invalid Password");
+          return;
         }
         return {
           email: userDetails.email,
